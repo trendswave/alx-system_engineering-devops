@@ -1,2 +1,2 @@
 #!/bin/bassh
-echo $PATH | tr ':' ' ' | wc -w
+echo $PATH | tr ":" "\n" | wc -l
