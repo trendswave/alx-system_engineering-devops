@@ -1,2 +1,2 @@
 #!/bin/bassh
-echo $(('echo $PATH|grep-o":/"|wc-l'+ 1))
+echo $PATH | tr ':' ' ' | wc -w
