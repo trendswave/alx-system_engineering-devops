@@ -1,35 +1,45 @@
 #!/usr/bin/env bash
-# This script manages 'manage_my_process'
+# (init) script 101-manage_my_process that manages manage_my_process
+pidFile="/var/run/my_process.pid"
 
-
-if [ $# -gt 0 ]
-then
-    if [ "$1" == "start" ]
-    then
+start()
+{
 	./manage_my_process &
-	touch /var/run/my_process.pid
+	echo "$!" > $pidFile
+}
 
-	echo "$!" > /var/run/my_process.pid
-	echo "manage_my_process started"
-    elif [ "$1" == "stop" ]
-    then
+stop()
+{
+	kill "$(cat $pidFile)"
+	rm $pidFile
+}
 
-	echo "manage_my_process stopped"
-	kill "$(cat /var/run/my_process.pid)"
-	rm -f /var/run/my_process.pid
-    elif [ "$1" == "restart" ]
-    then
+restart()
+{
+	stop
+	start
+}
 
-	kill "$(cat /var/run/my_process.pid)"
-	rm -f /var/run/my_process.pid
-	./manage_my_process &
-
-	touch /var/run/my_process.pid
-	echo "$!" > /var/run/my_process.pid
-	echo "manage_my_process restarted"
-    else
+if [ $# -ne 1 ]; then
 	echo "Usage: manage_my_process {start|stop|restart}"
-    fi
-else
-    echo "Usage: manage_my_process {start|stop|restart}"
+	exit
 fi
+
+case "$1" in
+	start)
+		start
+		echo "manage_my_process started"
+		;;
+	stop)
+		stop
+		echo "manage_my_process stopped"
+		;;
+	restart)
+		restart
+		echo "manage_my_process restarted"
+		;;
+	*)
+		echo "Usage: manage_my_process {start|stop|restart}"
+		exit
+esac
+
