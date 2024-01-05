@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+#The script displaysthe listening ports only
+sudo netstat -lp
