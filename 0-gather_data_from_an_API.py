@@ -28,3 +28,8 @@ if __name__ == '__main__':
             if len(completed_tasks) > 0:
                 for task in completed_tasks:
                     print('\t {}'.format(task.get('title')))
+                          )
+            )
+            if len(completed_tasks) > 0:
+                for task in completed_tasks:
+                    print('\t {}'.format(task.get('title')))
